@@ -1,0 +1,92 @@
+body {
+    background-color: #f6c8c7; /* Color de fondo */
+    background-image: url('fondo.jpg'); /* Imagen de fondo (opcional) */
+    background-size: cover; /* Ajustar la imagen de fondo para cubrir toda la pantalla */
+    background-position: center; /* Centrar la imagen de fondo */
+    background-repeat: no-repeat; /* No repetir la imagen de fondo */
+}
+
+h1 {
+    text-align: center;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.image-container {
+    margin: 10px;
+    position: relative;
+}
+
+/* Estilos generales */
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 200px; /* Cambia este valor según sea necesario */
+}
+
+/* Estilos para pantallas más pequeñas */
+@media (max-width: 600px) {
+    .image-container {
+        max-width: 90%; /* Aumentar el ancho máximo en dispositivos móviles */
+        margin: 5px; /* Reducir el margen en móviles */
+    }
+
+    body {
+        background-color: #e0e0e0; /* Cambiar el color de fondo en móviles (opcional) */
+    }
+
+    img {
+        max-width: 100%; /* Asegurarse de que la imagen se ajuste al contenedor */
+        height: auto; /* Mantener la relación de aspecto */
+    }
+}
+.image-description {
+    text-align: center;            /* Centrar el texto de la descripción */
+    overflow: hidden;              /* Ocultar texto que se desborda */
+    white-space: nowrap;           /* Evitar que el texto se rompa en varias líneas */
+    text-overflow: ellipsis;       /* Mostrar "..." si el texto es demasiado largo */
+    max-width: 100%;               /* Asegurarse de que no supere el ancho del contenedor */
+}
+
+img {
+    max-width: 100%;               /* Hacer que la imagen se ajuste al contenedor */
+    height: auto;                  /* Mantener la relación de aspecto */
+}
+}
+
+.add-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    margin: 5px;
+    padding: 10px;
+    width: 300px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
