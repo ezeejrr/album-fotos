@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Álbum de Fotos</title>
+  <title>Pupi y Jime</title>
   <style>
     #album {
       display: flex;
@@ -18,7 +18,7 @@
   </style>
 </head>
 <body>
-  <h1>Álbum de Fotos</h1>
+  <h1>Pupi y Jime</h1>
 
   <!-- Formulario para agregar imagen -->
   <input type="file" id="upload" accept="image/*">
