@@ -1,72 +1,78 @@
-const gallery = document.getElementById('gallery');
-const addImageBtn = document.getElementById('addImageBtn');
-
-// Cargar imágenes desde localStorage al cargar la página
-window.onload = function() {
-  let images = JSON.parse(localStorage.getItem('images')) || [];
-  images.forEach(imageURL => {
-    // Crear un elemento de imagen y agregarlo al DOM
-    let img = document.createElement('img');
-    img.src = imageURL;
-    document.getElementById('album').appendChild(img);  // 'album' es el contenedor
-  });
-};
-
-    });
-};
-
-addImageBtn.addEventListener('click', function() {
-    const imageUrl = document.getElementById('imageUrl').value;
-    const imageDescription = document.getElementById('imageDescription').value;
-
-    if (imageUrl && imageDescription) {
-        addImageToGallery(imageUrl, imageDescription);
-        saveImageToLocalStorage(imageUrl, imageDescription);
-        document.getElementById('imageUrl').value = '';
-        document.getElementById('imageDescription').value = '';
-    } else {
-        alert('Por favor, completa ambos campos.');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Álbum de Fotos</title>
+  <style>
+    #album {
+      display: flex;
+      flex-wrap: wrap;
     }
-});
+    .photo {
+      margin: 10px;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <h1>Álbum de Fotos</h1>
 
-// Función para agregar una imagen a la galería
-function addImageToGallery(url, description) {
-    const imageContainer = document.createElement('div');
-    imageContainer.classList.add('image-container');
+  <!-- Formulario para agregar imagen -->
+  <input type="file" id="upload" accept="image/*">
+  <button id="addImageBtn">Agregar Imagen</button>
 
-    const img = document.createElement('img');
-    img.src = url;
-    img.alt = description;
+  <div id="album"></div>
 
-    const desc = document.createElement('div');
-    desc.classList.add('image-description');
-    desc.innerText = description;
+  <script>
+    // Función para cargar las imágenes del localStorage
+    function loadImages() {
+      let images = JSON.parse(localStorage.getItem('images')) || [];
+      const album = document.getElementById('album');
+      album.innerHTML = '';  // Limpiar el album antes de cargar las imágenes
 
-    // Botón para eliminar la imagen
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerText = 'Eliminar';
-    deleteBtn.classList.add('delete-button');
-    deleteBtn.onclick = function() {
-        if (confirm("¿Estás seguro de que deseas eliminar esta imagen?")) {
-            gallery.removeChild(imageContainer);
-            removeImageFromLocalStorage(url, description);
-        }
-    };
+      // Mostrar las imágenes
+      images.forEach(function(imageURL) {
+        let img = document.createElement('img');
+        img.src = imageURL;
+        img.classList.add('photo');
+        album.appendChild(img);
+      });
+    }
 
-    // Asegurarse de que la descripción no sobresalga
-    imageContainer.appendChild(img);
-    imageContainer.appendChild(desc);
-    imageContainer.appendChild(deleteBtn);
-    gallery.appendChild(imageContainer);
-}
-// Función para eliminar la imagen de localStorage
-function removeImageFromLocalStorage(url, description) {
-    let images = JSON.parse(localStorage.getItem('images')) || [];
-    images = images.filter(image => image.url !== url || image.description !== description); // Filtra la imagen a eliminar
-    localStorage.setItem('images', JSON.stringify(images)); // Guarda el nuevo array
-}
-let images = JSON.parse(localStorage.getItem('images')) || [];
-images.push(imageURL);  // imageURL es la URL de la imagen que estás agregando
-localStorage.setItem('images', JSON.stringify(images));
+    // Función para agregar una nueva imagen
+    document.getElementById('addImageBtn').addEventListener('click', function() {
+      const fileInput = document.getElementById('upload');
+      const file = fileInput.files[0];
 
+      if (file) {
+        // Crear una URL para la imagen cargada
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          let imageURL = e.target.result; // La imagen en formato base64
 
+          // Recuperar las imágenes existentes
+          let images = JSON.parse(localStorage.getItem('images')) || [];
+
+          // Agregar la nueva imagen
+          images.push(imageURL);
+
+          // Guardar las imágenes en localStorage
+          localStorage.setItem('images', JSON.stringify(images));
+
+          // Cargar las imágenes nuevamente
+          loadImages();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Por favor selecciona una imagen');
+      }
+    });
+
+    // Cargar las imágenes al inicio
+    window.onload = loadImages;
+  </script>
+</body>
+</html>
